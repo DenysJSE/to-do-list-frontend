@@ -47,7 +47,8 @@ export default {
 				'peach-pink': 'var(--peach-pink)',
 				low: 'var(--low)',
 				medium: 'var(--medium)',
-				high: 'var(--high)'
+				high: 'var(--high)',
+				hover: 'var(--hover)'
 			}
 		}
 	},

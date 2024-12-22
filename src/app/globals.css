@@ -11,28 +11,29 @@
   --gray: #F5F5F5;
   --border: #EEEEEE;
   --placeholder: #999999;
+  --hover: #F2EFED;
 
   /* Colors for categories */
-  --blush-pink: #FFDDE1;
-  --coral-red: #FFC8C1;
-  --amber-gold: #FFE8A5;
-  --ocean-blue: #CDEAFD;
-  --emerald-green: #DFF7D8;
-  --sapphire-blue: #D6E4F9;
-  --lavender-purple: #EBDFF9;
-  --sanset-orange: #FFE3CF;
-  --mint-green: #DFF7E6;
-  --crimson-red: #FBCBCB;
-  --steel-gray: #E2E5E9;
-  --slate-blue: #E0E8F9;
-  --rosewood: #F7DADA;
-  --ivory-white: #FFF8E7;
-  --chocolate-brown: #EBD5C7;
-  --forest-green: #DDF7D4;
-  --sky-blue: #DFF3FE;
-  --golden-yellow: #FFF3C4;
-  --midnight-black: #F4F4F4;
-  --peach-pink: #FFE7DE;
+  --blush-pink: #F6A6B8;
+  --coral-red: #F28D7B;
+  --amber-gold: #D4B373;
+  --ocean-blue: #9FC7E7;
+  --emerald-green: #A2D6A7;
+  --sapphire-blue: #A5C8E7;
+  --lavender-purple: #B8A1D2;
+  --sanset-orange: #F0B87B;
+  --mint-green: #A4D6B6;
+  --crimson-red: #E29595;
+  --steel-gray: #B7BCC1;
+  --slate-blue: #A5B9D9;
+  --rosewood: #F1A7A7;
+  --ivory-white: #F2E2C4;
+  --chocolate-brown: #C9A88C;
+  --forest-green: #A7D9A4;
+  --sky-blue: #A3C7E9;
+  --golden-yellow: #E4C180;
+  --midnight-black: #D8D8D8;
+  --peach-pink: #F2C8A3;
 
   /* Priority */
   --low: #A3C9E2;

@@ -31,6 +31,10 @@ export interface ICategory {
 	title: string
 	isFavorite?: boolean
 	color: EnumCategoryColor
+	_count: {
+		users: number
+		tasks: number
+	}
 
 	users: IUser[]
 	tasks: ITaskResponse[]
