@@ -3,19 +3,58 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --text: #202020;
+  --sidebar-background: #FCFAF8;
+  --button-background: #DC4C3E;
+  --button-background-disabled: #EDA59E;
+  --gray: #F5F5F5;
+  --border: #EEEEEE;
+  --placeholder: #999999;
+
+  /* Colors for categories */
+  --blush-pink: #FFDDE1;
+  --coral-red: #FFC8C1;
+  --amber-gold: #FFE8A5;
+  --ocean-blue: #CDEAFD;
+  --emerald-green: #DFF7D8;
+  --sapphire-blue: #D6E4F9;
+  --lavender-purple: #EBDFF9;
+  --sanset-orange: #FFE3CF;
+  --mint-green: #DFF7E6;
+  --crimson-red: #FBCBCB;
+  --steel-gray: #E2E5E9;
+  --slate-blue: #E0E8F9;
+  --rosewood: #F7DADA;
+  --ivory-white: #FFF8E7;
+  --chocolate-brown: #EBD5C7;
+  --forest-green: #DDF7D4;
+  --sky-blue: #DFF3FE;
+  --golden-yellow: #FFF3C4;
+  --midnight-black: #F4F4F4;
+  --peach-pink: #FFE7DE;
+
+  /* Priority */
+  --low: #A3C9E2;
+  --medium: #A9D8B7;
+  --high: #D1A6F2;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
+  color: var(--text);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
