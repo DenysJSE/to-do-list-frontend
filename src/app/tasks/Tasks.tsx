@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useTasks } from '@/hooks/tasks/useTasks'
 import { EnumTaskPriority } from '@/types/task.types'
 import { useCreateTask } from '@/hooks/tasks/useCreateTask'
@@ -8,7 +8,7 @@ import { useDeleteTask } from '@/hooks/tasks/useDeleteTask'
 import Link from 'next/link'
 import { useCategoryTasks } from '@/hooks/tasks/useCategoryTasks'
 import { useCategory } from '@/hooks/categories/useCategory'
-import { TCategoryResponse } from '@/types/category.types'
+import Loader from '@/components/ui/Loader'
 
 interface ITasks {
 	mode: 'User' | 'Category'
@@ -33,7 +33,9 @@ export default function Tasks({ mode }: ITasks) {
 	const { category } =
 		mode === 'Category' ? useCategory() : { category: undefined }
 
-	const { tasks } = useDynamicTasks(mode)
+	const { tasks, isLoading } = useDynamicTasks(mode)
+
+	if (isLoading) return <Loader />
 
 	return (
 		<div className='flex flex-col gap-4 p-10'>

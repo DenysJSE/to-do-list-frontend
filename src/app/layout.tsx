@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
-import React from 'react'
+import React, { Suspense } from 'react'
 import Provider from '@/app/provider'
 import { Toaster } from 'sonner'
 import { SITE_NAME } from '@/constants/seo.constants'
+import Sidebar from '@/components/layouts/Sidebar'
 
 const roboto = Roboto({
 	subsets: ['latin'],
@@ -26,16 +27,19 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en' className={roboto.className}>
-			<body>
-				<Provider>
-					<main>{children}</main>
-					<Toaster
-						richColors
-						theme='light'
-						position='bottom-right'
-						duration={3000}
-					/>
-				</Provider>
+			<body className='relative'>
+				<Suspense fallback={<h1>Loading...</h1>}>
+					<Provider>
+						<Sidebar />
+						<main className='pl-[300px]'>{children}</main>
+						<Toaster
+							richColors
+							theme='light'
+							position='bottom-right'
+							duration={3000}
+						/>
+					</Provider>
+				</Suspense>
 			</body>
 		</html>
 	)

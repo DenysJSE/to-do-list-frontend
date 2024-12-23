@@ -2,10 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import { categoryService } from '@/services/category.service'
 
 export function useCategories() {
-	const { data: categories = [] } = useQuery({
+	const { data: categories = [], isLoading } = useQuery({
 		queryKey: ['categories'],
 		queryFn: () => categoryService.getAllByUser()
 	})
 
-	return { categories }
+	const isLoadingCategories = isLoading
+
+	return { categories, isLoadingCategories }
 }

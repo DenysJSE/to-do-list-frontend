@@ -1,5 +1,6 @@
 import { Hash } from 'lucide-react'
 import { TCategoryResponse } from '@/types/category.types'
+import Link from 'next/link'
 
 enum EnumCategoryColors {
 	BlushPink = '#F6A6B8',
@@ -35,22 +36,21 @@ export default function SidebarCategoriesSection({
 		<div>
 			<h1 className='text-placeholder font-bold text-sm mt-4 ml-2'>{title}</h1>
 			{categories.map(category => (
-				<div
-					key={category.id}
-					className='flex items-center gap-2 mt-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'
-				>
-					<Hash
-						width={20}
-						height={20}
-						style={{ color: EnumCategoryColors[category.color] }}
-					/>
-					<p>{category.title}</p>
-					{category._count.tasks > 0 && (
-						<span className='ml-auto text-placeholder text-xs'>
-							{category._count.tasks}
-						</span>
-					)}
-				</div>
+				<Link key={category.id} href={`/categories/tasks/${category.id}`}>
+					<div className='flex items-center gap-2 mt-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'>
+						<Hash
+							width={20}
+							height={20}
+							style={{ color: EnumCategoryColors[category.color] }}
+						/>
+						<p>{category.title}</p>
+						{category._count.tasks > 0 && (
+							<span className='ml-auto text-placeholder text-xs'>
+								{category._count.tasks}
+							</span>
+						)}
+					</div>
+				</Link>
 			))}
 		</div>
 	)
