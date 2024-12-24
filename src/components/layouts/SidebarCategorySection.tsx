@@ -2,7 +2,7 @@ import { Hash } from 'lucide-react'
 import { TCategoryResponse } from '@/types/category.types'
 import Link from 'next/link'
 
-enum EnumCategoryColors {
+export enum EnumCategoryColors {
 	BlushPink = '#F6A6B8',
 	CoralRed = '#F28D7B',
 	AmberGold = '#D4B373',

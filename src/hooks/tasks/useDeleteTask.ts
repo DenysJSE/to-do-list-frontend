@@ -18,6 +18,10 @@ export function useDeleteTask() {
 			queryClient
 				.invalidateQueries({ queryKey: ['category tasks'] })
 				.then(() => toast.success('Task deleted successfully!'))
+
+			queryClient.invalidateQueries({ queryKey: ['categories'] })
+
+			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
 		}
 	})
 

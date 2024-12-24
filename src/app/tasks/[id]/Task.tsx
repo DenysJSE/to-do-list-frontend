@@ -7,7 +7,7 @@ import React from 'react'
 import { useCreateSubtask } from '@/hooks/tasks/useCreateSubtask'
 import { useDeleteSubtask } from '@/hooks/tasks/useDeleteSubtask'
 
-const priorityClasses: Record<EnumTaskPriority, string> = {
+export const priorityClasses: Record<EnumTaskPriority, string> = {
 	[EnumTaskPriority.LOW]: 'bg-low',
 	[EnumTaskPriority.MEDIUM]: 'bg-medium',
 	[EnumTaskPriority.HIGH]: 'bg-high'

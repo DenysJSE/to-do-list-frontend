@@ -16,7 +16,7 @@ export function useCreateTask() {
 	const [title, setTitle] = useState<string>('')
 	const [description, setDescription] = useState<string>('')
 	const [categoryId, setCategoryId] = useState<number>(1)
-	const [priority, setPriority] = useState<EnumTaskPriority>(priorityValues[0])
+	const [priority, setPriority] = useState<EnumTaskPriority | null>(null)
 
 	const queryClient = useQueryClient()
 
@@ -27,7 +27,7 @@ export function useCreateTask() {
 			setTitle('')
 			setDescription('')
 			setCategoryId(1)
-			setPriority(priorityValues[0])
+			setPriority(null)
 
 			queryClient
 				.invalidateQueries({
@@ -38,11 +38,21 @@ export function useCreateTask() {
 			queryClient
 				.invalidateQueries({ queryKey: ['category tasks'] })
 				.then(() => toast.success('Successfully created!'))
+
+			queryClient.invalidateQueries({ queryKey: ['categories'] })
+
+			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
 		}
 	})
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
+
+		if (!priority) {
+			toast.error('Please select a priority before submitting.')
+			return
+		}
+
 		const data: ITaskFormState = {
 			title,
 			description,
