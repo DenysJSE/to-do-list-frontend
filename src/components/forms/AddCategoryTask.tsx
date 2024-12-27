@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useCreateTask } from '@/hooks/tasks/useCreateTask'
 import { useCategories } from '@/hooks/categories/useCategories'
 import Loader from '@/components/ui/Loader'
 import CustomPrioritySelect from '@/components/ui/CustomPrioritySelect'
 import CustomCategorySelect from '@/components/ui/CustomCategorySelect'
+import useSetTitlePlaceholder from '@/hooks/useSetTitlePlaceholder'
 
 export default function AddCategoryTask({
 	setIsTaskForm
@@ -25,25 +26,7 @@ export default function AddCategoryTask({
 
 	const { categories, isLoadingCategories } = useCategories()
 
-	const exampleTasks = [
-		'Go to the library on Monday',
-		'Clean the house at 5 AM',
-		'Buy groceries for the week',
-		'Call mom to catch up',
-		'Finish reading a book',
-		'Plan the weekend trip'
-	]
-
-	const [placeholder, setPlaceholder] = useState('')
-
-	const getRandomTask = () => {
-		const randomIndex = Math.floor(Math.random() * exampleTasks.length)
-		return exampleTasks[randomIndex]
-	}
-
-	useEffect(() => {
-		setPlaceholder(getRandomTask())
-	}, [])
+	const { placeholder } = useSetTitlePlaceholder()
 
 	if (isLoadingCategories) return <Loader />
 
