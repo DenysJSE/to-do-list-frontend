@@ -86,7 +86,7 @@ export default function Tasks({ mode }: ITasks) {
 				{tasks.map(task =>
 					task.isDone ? (
 						<Link key={task.id} href={`/tasks/${task.id}`}>
-							<div className='flex items-center gap-4 bg-gray'>
+							<div className='flex items-center gap-4 opacity-50'>
 								<div
 									className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center'
 									onClick={e => {
@@ -97,7 +97,7 @@ export default function Tasks({ mode }: ITasks) {
 								>
 									<div className='w-3 h-3 bg-button-background rounded-full' />
 								</div>
-								<h1>{task.title}</h1>
+								<h1 className='line-through'>{task.title}</h1>
 								<p
 									className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center`}
 								>

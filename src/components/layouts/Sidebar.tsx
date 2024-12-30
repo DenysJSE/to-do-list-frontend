@@ -8,8 +8,11 @@ import SidebarCategoriesSection from '@/components/layouts/SidebarCategorySectio
 import { useTasks } from '@/hooks/tasks/useTasks'
 import Loader from '@/components/ui/Loader'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Sidebar() {
+	const currentPath = usePathname()
+
 	const [isFavorite, setIsFavorite] = useState(false)
 
 	const { categories, isLoadingCategories } = useCategories()
@@ -33,7 +36,10 @@ export default function Sidebar() {
 				<Search width={20} height={20} />
 				<h1>Search</h1>
 			</div>
-			<Link href={'/tasks'}>
+			<Link
+				href={'/tasks'}
+				className={currentPath === '/tasks' ? 'bg-hover rounded-xl' : ''}
+			>
 				<div className='flex items-center gap-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'>
 					<Inbox width={20} height={20} />
 					<h1>All my tasks</h1>
