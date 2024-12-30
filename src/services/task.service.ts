@@ -36,6 +36,13 @@ export const taskService = {
 		return response.data
 	},
 
+	async markTaskAsUndone(taskId: number | string) {
+		const response = await axiosWithAuth.patch(
+			`/tasks/incomplete-task/${taskId}`
+		)
+		return response.data
+	},
+
 	async updateTask(taskId: number | string, data: ITaskFormState) {
 		const response = await axiosWithAuth.put<ITaskResponse>(
 			`/tasks/${taskId}`,

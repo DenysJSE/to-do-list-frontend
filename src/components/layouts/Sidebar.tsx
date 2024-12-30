@@ -37,9 +37,9 @@ export default function Sidebar() {
 				<div className='flex items-center gap-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'>
 					<Inbox width={20} height={20} />
 					<h1>All my tasks</h1>
-					{tasks.length > 0 && (
+					{tasks.filter(task => !task.isDone).length > 0 && (
 						<span className='ml-auto text-placeholder text-xs'>
-							{tasks.length}
+							{tasks.filter(task => !task.isDone).length}
 						</span>
 					)}
 				</div>
