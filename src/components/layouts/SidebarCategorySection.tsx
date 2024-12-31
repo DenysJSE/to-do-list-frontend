@@ -1,7 +1,11 @@
-import { Hash } from 'lucide-react'
+import { Hash, Star } from 'lucide-react'
 import { TCategoryResponse } from '@/types/category.types'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { categoryService } from '@/services/category.service'
+import { toast } from 'sonner'
 
 export enum EnumCategoryColors {
 	BlushPink = '#F6A6B8',
@@ -35,6 +39,40 @@ export default function SidebarCategoriesSection({
 }) {
 	const currentPath = usePathname()
 
+	const queryClient = useQueryClient()
+
+	const { mutate: addToFavorite } = useMutation({
+		mutationKey: ['add category to favorite'],
+		mutationFn: (id: number) => categoryService.addToFavorite(id),
+		onSuccess() {
+			toast.success('Category added to favorite!')
+
+			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
+		}
+	})
+
+	const { mutate: removeFromFavorite } = useMutation({
+		mutationKey: ['remove category to favorite'],
+		mutationFn: (id: number) => categoryService.removeFromFavorite(id),
+		onSuccess() {
+			toast.success('Category removed from favorite!')
+
+			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
+		}
+	})
+
+	const [hoveredCategoryId, setHoveredCategoryId] = useState<string | null>(
+		null
+	)
+
+	const handleAddToFavorite = (categoryId: number) => {
+		addToFavorite(categoryId)
+	}
+
+	const handleRemoveFromFavorite = (categoryId: number) => {
+		removeFromFavorite(categoryId)
+	}
+
 	return (
 		<div>
 			<h1 className='text-placeholder font-bold text-sm mt-4 ml-2'>{title}</h1>
@@ -47,6 +85,8 @@ export default function SidebarCategoriesSection({
 									? 'bg-hover'
 									: 'hover:bg-hover'
 							}`}
+						onMouseEnter={() => setHoveredCategoryId(category.id)}
+						onMouseLeave={() => setHoveredCategoryId(null)}
 					>
 						<Hash
 							width={20}
@@ -54,10 +94,24 @@ export default function SidebarCategoriesSection({
 							style={{ color: EnumCategoryColors[category.color] }}
 						/>
 						<p>{category.title}</p>
-						{category._count.tasks > 0 && (
-							<span className='ml-auto text-placeholder text-xs'>
-								{category._count.tasks}
-							</span>
+						{hoveredCategoryId === category.id ? (
+							<Star
+								width={15}
+								className='ml-auto'
+								onClick={e => {
+									e.preventDefault()
+									e.stopPropagation()
+									category.isFavorite
+										? handleRemoveFromFavorite(+category.id)
+										: handleAddToFavorite(+category.id)
+								}}
+							/>
+						) : (
+							category._count.tasks > 0 && (
+								<span className='ml-auto mr-1 text-placeholder text-xs'>
+									{category._count.tasks}
+								</span>
+							)
 						)}
 					</div>
 				</Link>

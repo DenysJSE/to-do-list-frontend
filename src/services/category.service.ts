@@ -1,10 +1,5 @@
-import {
-	ICategory,
-	ICategoryFormState,
-	TCategoryResponse
-} from '@/types/category.types'
+import { ICategoryFormState, TCategoryResponse } from '@/types/category.types'
 import { axiosWithAuth } from '@/api/interceptors'
-import { IUserResponse } from '@/types/user.types'
 
 export const categoryService = {
 	async createCategory(data: ICategoryFormState) {
@@ -49,6 +44,13 @@ export const categoryService = {
 
 	async addToFavorite(categoryId: number | string) {
 		const response = await axiosWithAuth.patch(`/categories/${categoryId}`)
+		return response.data
+	},
+
+	async removeFromFavorite(categoryId: number | string) {
+		const response = await axiosWithAuth.patch(
+			`/categories/remove/${categoryId}`
+		)
 		return response.data
 	}
 }

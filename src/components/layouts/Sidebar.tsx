@@ -21,7 +21,11 @@ export default function Sidebar() {
 	const { tasks } = useTasks()
 
 	useEffect(() => {
-		if (favoriteCategories.length > 0) setIsFavorite(true)
+		if (favoriteCategories.length > 0) {
+			setIsFavorite(true)
+		} else {
+			setIsFavorite(false)
+		}
 	}, [favoriteCategories])
 
 	if (isLoadingCategories || isLoadingFavorite) return <Loader />
