@@ -34,7 +34,6 @@ export default function SidebarCategoriesSection({
 	title: string
 }) {
 	const currentPath = usePathname()
-	console.log(currentPath)
 
 	return (
 		<div>

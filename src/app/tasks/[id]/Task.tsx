@@ -71,64 +71,60 @@ export default function Task() {
 						<p>{task.description}</p>
 
 						<h1 className='mt-4 font-medium'>Sub-tasks</h1>
-						{subtasks.length ? (
-							subtasks.map(subtask =>
-								!subtask.isDone ? (
-									<div key={subtask.id}>
-										<div className='flex items-center gap-4 mt-2 px-6'>
-											<div
-												className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center cursor-pointer'
-												onClick={e => {
-													e.preventDefault()
-													e.stopPropagation()
-													handleDoneSubmit(+subtask.id)
-												}}
+						{subtasks.map(subtask =>
+							!subtask.isDone ? (
+								<div key={subtask.id}>
+									<div className='flex items-center gap-4 mt-2 px-6'>
+										<div
+											className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center cursor-pointer'
+											onClick={e => {
+												e.preventDefault()
+												e.stopPropagation()
+												handleDoneSubmit(+subtask.id)
+											}}
+										/>
+										<h2>{subtask.title}</h2>
+										<button
+											onClick={() => deleteSubtask(subtask.id)}
+											className='ml-auto'
+										>
+											<Trash
+												width={20}
+												height={20}
+												color='var(--button-background)'
 											/>
-											<h2>{subtask.title}</h2>
-											<button
-												onClick={() => deleteSubtask(subtask.id)}
-												className='ml-auto'
-											>
-												<Trash
-													width={20}
-													height={20}
-													color='var(--button-background)'
-												/>
-											</button>
-										</div>
-										<hr className='mt-4 border border-border ml-5' />
+										</button>
 									</div>
-								) : (
-									<div key={subtask.id}>
-										<div className='flex items-center gap-4 mt-2 px-6 opacity-50'>
-											<div
-												className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center cursor-pointer'
-												onClick={e => {
-													e.preventDefault()
-													e.stopPropagation()
-													handleUndoneSubmit(+subtask.id)
-												}}
-											>
-												<div className='w-3 h-3 bg-button-background rounded-full' />
-											</div>
-											<h2 className='line-through'>{subtask.title}</h2>
-											<button
-												onClick={() => deleteSubtask(subtask.id)}
-												className='ml-auto'
-											>
-												<Trash
-													width={20}
-													height={20}
-													color='var(--button-background)'
-												/>
-											</button>
+									<hr className='mt-4 border border-border ml-5' />
+								</div>
+							) : (
+								<div key={subtask.id}>
+									<div className='flex items-center gap-4 mt-2 px-6 opacity-50'>
+										<div
+											className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center cursor-pointer'
+											onClick={e => {
+												e.preventDefault()
+												e.stopPropagation()
+												handleUndoneSubmit(+subtask.id)
+											}}
+										>
+											<div className='w-3 h-3 bg-button-background rounded-full' />
 										</div>
-										<hr className='mt-4 border border-border ml-5' />
+										<h2 className='line-through'>{subtask.title}</h2>
+										<button
+											onClick={() => deleteSubtask(subtask.id)}
+											className='ml-auto'
+										>
+											<Trash
+												width={20}
+												height={20}
+												color='var(--button-background)'
+											/>
+										</button>
 									</div>
-								)
+									<hr className='mt-4 border border-border ml-5' />
+								</div>
 							)
-						) : (
-							<h1>There are no subtask!</h1>
 						)}
 					</div>
 				) : (

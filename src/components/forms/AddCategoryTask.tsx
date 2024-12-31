@@ -16,7 +16,6 @@ export default function AddCategoryTask({
 		setTitle,
 		description,
 		setDescription,
-		categoryId,
 		setCategoryId,
 		priority,
 		setPriority,
@@ -60,7 +59,6 @@ export default function AddCategoryTask({
 
 				<div className='flex items-center justify-between'>
 					<CustomCategorySelect
-						categoryId={categoryId}
 						setCategoryIdAction={setCategoryId}
 						categories={categories}
 					/>
