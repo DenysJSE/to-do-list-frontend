@@ -11,5 +11,5 @@ export function useTask() {
 		enabled: !!id
 	})
 
-	return { task }
+	return { task, id }
 }

@@ -89,5 +89,12 @@ export const taskService = {
 			`/tasks/complete-subtask/${subtaskId}`
 		)
 		return response.data
+	},
+
+	async markSubtaskAsUndone(subtaskId: number | string) {
+		const response = await axiosWithAuth.patch(
+			`/tasks/incomplete-subtask/${subtaskId}`
+		)
+		return response.data
 	}
 }
