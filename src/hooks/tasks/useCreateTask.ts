@@ -4,12 +4,6 @@ import { EnumTaskPriority, ITaskFormState } from '@/types/task.types'
 import { toast } from 'sonner'
 import React, { useState } from 'react'
 
-export const priorityClasses: Record<EnumTaskPriority, string> = {
-	[EnumTaskPriority.LOW]: 'LOW',
-	[EnumTaskPriority.MEDIUM]: 'MEDIUM',
-	[EnumTaskPriority.HIGH]: 'HIGH'
-}
-
 export function useCreateTask() {
 	const priorityValues = Object.values(EnumTaskPriority)
 
