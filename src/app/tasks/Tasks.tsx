@@ -32,7 +32,7 @@ export default function Tasks({ mode }: ITasks) {
 	const { handleDoneSubmit } = useMarkAsDone()
 	const { handleUndoneSubmit } = useMarkAsUndone()
 
-	const { title, setTitle, handleSubmit } = useUpdateCategory()
+	const { title, setTitle, setColor, handleSubmit } = useUpdateCategory()
 
 	const [isTaskForm, setIsTaskForm] = useState(false)
 	const { isShow, setIsShow, ref } = useOutside(false)
@@ -94,7 +94,10 @@ export default function Tasks({ mode }: ITasks) {
 							<p
 								className='category-title'
 								onClick={() => {
-									if (category) setTitle(category.title)
+									if (category) {
+										setTitle(category.title)
+										setColor(category.color)
+									}
 									setIsEditInput(true)
 								}}
 							>
