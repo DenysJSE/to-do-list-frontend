@@ -77,6 +77,17 @@ export default function Tasks({ mode }: ITasks) {
 
 	const [isTaskForm, setIsTaskForm] = useState(false)
 	const { isShow, setIsShow, ref } = useOutside(false)
+	const [modalTaskId, setModalTaskId] = useState<string | null>(null)
+
+	const openDeleteModal = (taskId: string) => {
+		setModalTaskId(taskId)
+		setIsShow(true)
+	}
+
+	const closeDeleteModal = () => {
+		setModalTaskId(null)
+		setIsShow(false)
+	}
 
 	if (isLoading) return <Loader />
 
@@ -86,23 +97,31 @@ export default function Tasks({ mode }: ITasks) {
 				<h1 className='font-bold text-2xl'>
 					{mode === 'Category' && category?.title} Tasks
 				</h1>
-				{tasks.map(task =>
-					task.isDone ? (
-						<Link key={task.id} href={`/tasks/${task.id}`}>
-							<div className='flex items-center gap-4 opacity-50'>
+				{tasks.map(task => (
+					<div key={task.id}>
+						<Link href={`/tasks/${task.id}`}>
+							<div className='flex items-center gap-4'>
 								<div
-									className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center'
+									className={`w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center ${
+										task.isDone ? 'opacity-50' : ''
+									}`}
 									onClick={e => {
 										e.preventDefault()
 										e.stopPropagation()
-										handleUndoneSubmit(+task.id)
+										task.isDone
+											? handleUndoneSubmit(+task.id)
+											: handleDoneSubmit(+task.id)
 									}}
 								>
-									<div className='w-3 h-3 bg-button-background rounded-full' />
+									{task.isDone && (
+										<div className='w-3 h-3 bg-button-background rounded-full' />
+									)}
 								</div>
-								<h1 className='line-through'>{task.title}</h1>
+								<h1 className={task.isDone ? 'line-through opacity-50' : ''}>
+									{task.title}
+								</h1>
 								<p
-									className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center`}
+									className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center ${task.isDone ? 'opacity-50' : ''}`}
 								>
 									{task.priority}
 								</p>
@@ -110,69 +129,15 @@ export default function Tasks({ mode }: ITasks) {
 									onClick={e => {
 										e.preventDefault()
 										e.stopPropagation()
-										// deleteTask(task.id)
+										openDeleteModal(task.id)
 									}}
 								>
-									<Trash
-										width={20}
-										height={20}
-										onClick={() => setIsShow(true)}
-									/>
-									{isShow && (
-										<DeleteTaskModal
-											ref={ref}
-											setIsShow={setIsShow}
-											deleteTask={deleteTask}
-											id={task.id}
-										/>
-									)}
+									<Trash width={20} height={20} />
 								</button>
 							</div>
 						</Link>
-					) : (
-						<div key={task.id}>
-							<Link href={`/tasks/${task.id}`}>
-								<div className='flex items-center gap-4'>
-									<div
-										className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center'
-										onClick={e => {
-											e.preventDefault()
-											e.stopPropagation()
-											handleDoneSubmit(+task.id)
-										}}
-									/>
-									<h1>{task.title}</h1>
-									<p
-										className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center`}
-									>
-										{task.priority}
-									</p>
-									<button
-										onClick={e => {
-											e.preventDefault()
-											e.stopPropagation()
-											// deleteTask(task.id)
-										}}
-									>
-										<Trash
-											width={20}
-											height={20}
-											onClick={() => setIsShow(true)}
-										/>
-									</button>
-								</div>
-							</Link>
-							{isShow && (
-								<DeleteTaskModal
-									ref={ref}
-									setIsShow={setIsShow}
-									deleteTask={deleteTask}
-									id={task.id}
-								/>
-							)}
-						</div>
-					)
-				)}
+					</div>
+				))}
 
 				{isTaskForm ? (
 					<AddCategoryTask setIsTaskForm={setIsTaskForm} />
@@ -184,6 +149,16 @@ export default function Tasks({ mode }: ITasks) {
 						<Plus width={20} height={20} color={'#DC4C3E'} />
 						<h2>Add task</h2>
 					</div>
+				)}
+
+				{/* Render the modal outside the task loop */}
+				{isShow && modalTaskId && (
+					<DeleteTaskModal
+						ref={ref}
+						setIsShow={closeDeleteModal}
+						deleteTask={deleteTask}
+						id={modalTaskId}
+					/>
 				)}
 			</div>
 		</div>
