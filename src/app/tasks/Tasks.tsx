@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTasks } from '@/hooks/tasks/useTasks'
 import { EnumTaskPriority } from '@/types/task.types'
 import { useDeleteTask } from '@/hooks/tasks/useDeleteTask'
@@ -11,11 +11,11 @@ import Loader from '@/components/ui/Loader'
 import { Plus, Trash } from 'lucide-react'
 import { priorityClasses } from '@/app/tasks/[id]/Task'
 import AddCategoryTask from '@/components/forms/AddCategoryTask'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { taskService } from '@/services/task.service'
-import { toast } from 'sonner'
 import { useOutside } from '@/hooks/useOutside'
 import DeleteTaskModal from '@/components/ui/DeleteTaskModal'
+import useMarkAsDone from '@/hooks/tasks/useMarkAdDone'
+import useMarkAsUndone from '@/hooks/tasks/useMarkAdUndone'
+import useUpdateCategory from '@/hooks/categories/useUpdateCategory'
 
 interface ITasks {
 	mode: 'User' | 'Category'
@@ -29,55 +29,33 @@ export default function Tasks({ mode }: ITasks) {
 
 	const { tasks, isLoading } = useDynamicTasks(mode)
 
-	const queryClient = useQueryClient()
+	const { handleDoneSubmit } = useMarkAsDone()
+	const { handleUndoneSubmit } = useMarkAsUndone()
 
-	const { mutate: mutateDone } = useMutation({
-		mutationKey: ['mark task as done'],
-		mutationFn: (id: number) => taskService.markTaskAsDone(id),
-		onSuccess() {
-			toast.success('Task is completed!')
-
-			queryClient.invalidateQueries({
-				queryKey: ['tasks']
-			})
-
-			queryClient.invalidateQueries({ queryKey: ['category tasks'] })
-
-			queryClient.invalidateQueries({ queryKey: ['categories'] })
-
-			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
-		}
-	})
-
-	const { mutate: mutateUndone } = useMutation({
-		mutationKey: ['mark task as undone'],
-		mutationFn: (id: number) => taskService.markTaskAsUndone(id),
-		onSuccess() {
-			toast.success('Task is uncompleted!')
-
-			queryClient.invalidateQueries({
-				queryKey: ['tasks']
-			})
-
-			queryClient.invalidateQueries({ queryKey: ['category tasks'] })
-
-			queryClient.invalidateQueries({ queryKey: ['categories'] })
-
-			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
-		}
-	})
-
-	const handleDoneSubmit = (id: number) => {
-		mutateDone(id)
-	}
-
-	const handleUndoneSubmit = (id: number) => {
-		mutateUndone(id)
-	}
+	const { title, setTitle, handleSubmit } = useUpdateCategory()
 
 	const [isTaskForm, setIsTaskForm] = useState(false)
 	const { isShow, setIsShow, ref } = useOutside(false)
 	const [modalTaskId, setModalTaskId] = useState<string | null>(null)
+
+	const [isEditInput, setIsEditInput] = useState(false)
+
+	useEffect(() => {
+		if (isEditInput) {
+			const handleClickOutside = (e: MouseEvent) => {
+				if (ref.current && !ref.current.contains(e.target as Node)) {
+					handleSubmit()
+					setIsEditInput(false)
+				}
+			}
+
+			document.addEventListener('mousedown', handleClickOutside)
+
+			return () => {
+				document.removeEventListener('mousedown', handleClickOutside)
+			}
+		}
+	}, [isEditInput, handleSubmit, ref])
 
 	const openDeleteModal = (taskId: string) => {
 		setModalTaskId(taskId)
@@ -95,7 +73,37 @@ export default function Tasks({ mode }: ITasks) {
 		<div className='flex flex-col m-auto gap-4 py-14 max-w-[800px]'>
 			<div className='flex flex-col gap-4'>
 				<h1 className='font-bold text-2xl'>
-					{mode === 'Category' && category?.title} Tasks
+					{mode === 'Category' ? (
+						isEditInput ? (
+							<div ref={ref}>
+								<input
+									type='text'
+									value={title}
+									autoFocus={true}
+									className='category-title'
+									onChange={e => setTitle(e.target.value)}
+									onKeyDown={e => {
+										if (e.key === 'Enter') {
+											handleSubmit()
+											setIsEditInput(false)
+										}
+									}}
+								/>
+							</div>
+						) : (
+							<p
+								className='category-title'
+								onClick={() => {
+									if (category) setTitle(category.title)
+									setIsEditInput(true)
+								}}
+							>
+								{category?.title}
+							</p>
+						)
+					) : (
+						'Tasks'
+					)}
 				</h1>
 				{tasks.map(task => (
 					<div key={task.id}>
@@ -153,7 +161,6 @@ export default function Tasks({ mode }: ITasks) {
 					</div>
 				)}
 
-				{/* Render the modal outside the task loop */}
 				{isShow && modalTaskId && (
 					<DeleteTaskModal
 						ref={ref}
