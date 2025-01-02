@@ -14,6 +14,8 @@ import AddCategoryTask from '@/components/forms/AddCategoryTask'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { taskService } from '@/services/task.service'
 import { toast } from 'sonner'
+import { useOutside } from '@/hooks/useOutside'
+import DeleteTaskModal from '@/components/ui/DeleteTaskModal'
 
 interface ITasks {
 	mode: 'User' | 'Category'
@@ -74,6 +76,7 @@ export default function Tasks({ mode }: ITasks) {
 	}
 
 	const [isTaskForm, setIsTaskForm] = useState(false)
+	const { isShow, setIsShow, ref } = useOutside(false)
 
 	if (isLoading) return <Loader />
 
@@ -107,41 +110,67 @@ export default function Tasks({ mode }: ITasks) {
 									onClick={e => {
 										e.preventDefault()
 										e.stopPropagation()
-										deleteTask(task.id)
+										// deleteTask(task.id)
 									}}
 								>
-									<Trash width={20} height={20} />
+									<Trash
+										width={20}
+										height={20}
+										onClick={() => setIsShow(true)}
+									/>
+									{isShow && (
+										<DeleteTaskModal
+											ref={ref}
+											setIsShow={setIsShow}
+											deleteTask={deleteTask}
+											id={task.id}
+										/>
+									)}
 								</button>
 							</div>
 						</Link>
 					) : (
-						<Link key={task.id} href={`/tasks/${task.id}`}>
-							<div className='flex items-center gap-4'>
-								<div
-									className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center'
-									onClick={e => {
-										e.preventDefault()
-										e.stopPropagation()
-										handleDoneSubmit(+task.id)
-									}}
+						<div key={task.id}>
+							<Link href={`/tasks/${task.id}`}>
+								<div className='flex items-center gap-4'>
+									<div
+										className='w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center'
+										onClick={e => {
+											e.preventDefault()
+											e.stopPropagation()
+											handleDoneSubmit(+task.id)
+										}}
+									/>
+									<h1>{task.title}</h1>
+									<p
+										className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center`}
+									>
+										{task.priority}
+									</p>
+									<button
+										onClick={e => {
+											e.preventDefault()
+											e.stopPropagation()
+											// deleteTask(task.id)
+										}}
+									>
+										<Trash
+											width={20}
+											height={20}
+											onClick={() => setIsShow(true)}
+										/>
+									</button>
+								</div>
+							</Link>
+							{isShow && (
+								<DeleteTaskModal
+									ref={ref}
+									setIsShow={setIsShow}
+									deleteTask={deleteTask}
+									id={task.id}
 								/>
-								<h1>{task.title}</h1>
-								<p
-									className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center`}
-								>
-									{task.priority}
-								</p>
-								<button
-									onClick={e => {
-										e.preventDefault()
-										e.stopPropagation()
-										deleteTask(task.id)
-									}}
-								>
-									<Trash width={20} height={20} />
-								</button>
-							</div>
-						</Link>
+							)}
+						</div>
 					)
 				)}
 
