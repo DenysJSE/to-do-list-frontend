@@ -102,7 +102,7 @@ export default function Tasks({ mode }: ITasks) {
 						<Link href={`/tasks/${task.id}`}>
 							<div className='flex items-center gap-4'>
 								<div
-									className={`w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center ${
+									className={`w-5 h-5 bg-transparent rounded-full border border-button-background flex items-center justify-center z-10 ${
 										task.isDone ? 'opacity-50' : ''
 									}`}
 									onClick={e => {
@@ -117,11 +117,13 @@ export default function Tasks({ mode }: ITasks) {
 										<div className='w-3 h-3 bg-button-background rounded-full' />
 									)}
 								</div>
-								<h1 className={task.isDone ? 'line-through opacity-50' : ''}>
+								<h1
+									className={task.isDone ? 'line-through opacity-50 z-10' : ''}
+								>
 									{task.title}
 								</h1>
 								<p
-									className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center ${task.isDone ? 'opacity-50' : ''}`}
+									className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center z-10 ${task.isDone ? 'opacity-50' : ''}`}
 								>
 									{task.priority}
 								</p>

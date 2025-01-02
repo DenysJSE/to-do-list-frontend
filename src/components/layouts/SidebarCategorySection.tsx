@@ -1,4 +1,4 @@
-import { Hash, Star } from 'lucide-react'
+import { Hash, Plus, Star } from 'lucide-react'
 import { TCategoryResponse } from '@/types/category.types'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { categoryService } from '@/services/category.service'
 import { toast } from 'sonner'
+import { useOutside } from '@/hooks/useOutside'
+import AddCategory from '@/components/forms/AddCategory'
 
 export enum EnumCategoryColors {
 	BlushPink = '#F6A6B8',
@@ -32,10 +34,14 @@ export enum EnumCategoryColors {
 
 export default function SidebarCategoriesSection({
 	categories,
-	title
+	title,
+	isFavorite,
+	isHoverSidebar
 }: {
 	categories: TCategoryResponse[]
 	title: string
+	isFavorite: boolean
+	isHoverSidebar?: boolean
 }) {
 	const currentPath = usePathname()
 
@@ -65,6 +71,8 @@ export default function SidebarCategoriesSection({
 		null
 	)
 
+	const { isShow, setIsShow, ref } = useOutside(false)
+
 	const handleAddToFavorite = (categoryId: number) => {
 		addToFavorite(categoryId)
 	}
@@ -75,7 +83,21 @@ export default function SidebarCategoriesSection({
 
 	return (
 		<div>
-			<h1 className='text-placeholder font-bold text-sm mt-4 ml-2'>{title}</h1>
+			<div className='flex items-center justify-between mt-4'>
+				<h1 className='text-placeholder font-bold text-sm ml-2'>{title}</h1>
+				{!isFavorite && isHoverSidebar && (
+					<Plus
+						width={17}
+						height={17}
+						color='gray'
+						className='mr-2 cursor-pointer'
+						onClick={() => setIsShow(true)}
+					/>
+				)}
+			</div>
+
+			{isShow && <AddCategory setIsShow={setIsShow} ref={ref} />}
+
 			{categories.map(category => (
 				<Link key={category.id} href={`/categories/tasks/${category.id}`}>
 					<div

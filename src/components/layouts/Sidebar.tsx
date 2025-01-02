@@ -17,6 +17,7 @@ export default function Sidebar() {
 
 	const [isFavorite, setIsFavorite] = useState(false)
 	const [isTaskForm, setIsTaskForm] = useState(false)
+	const [isHoverSidebar, setIsHoverSidebar] = useState(false)
 
 	const { categories, isLoadingCategories } = useCategories()
 	const { favoriteCategories, isLoadingFavorite } = useCategoriesFavorite()
@@ -37,7 +38,11 @@ export default function Sidebar() {
 
 	return (
 		<>
-			<aside className='w-[300px] bg-sidebar-background fixed top-0 bottom-0 left-0 py-6 px-4 flex flex-col'>
+			<aside
+				className='w-[300px] bg-sidebar-background fixed top-0 bottom-0 left-0 py-6 px-4 flex flex-col z-50'
+				onMouseEnter={() => setIsHoverSidebar(true)}
+				onMouseLeave={() => setIsHoverSidebar(false)}
+			>
 				<div
 					className='flex items-center gap-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'
 					onClick={() => {
@@ -75,6 +80,7 @@ export default function Sidebar() {
 					<SidebarCategoriesSection
 						categories={favoriteCategories}
 						title='Favorite'
+						isFavorite={true}
 					/>
 				)}
 
@@ -82,6 +88,8 @@ export default function Sidebar() {
 					<SidebarCategoriesSection
 						categories={categories}
 						title='My Categories'
+						isFavorite={false}
+						isHoverSidebar={isHoverSidebar}
 					/>
 				</div>
 			</aside>
