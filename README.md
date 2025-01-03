@@ -47,16 +47,7 @@ Check out the live demo [here](link-to-demo).
 Or clone the repo and run locally:
 
 ```bash
-# Clone the repo (Backend)
-git clone https://github.com/DenysJSE/to-do-list-backend
-
-# Install dependencies
-npm install
-
-# Start the app
-npm run start: dev
-
-# Clone the repo (Frontend)
+# Clone the repo
 git clone https://github.com/DenysJSE/to-do-list-frontend
 
 # Install dependencies
@@ -71,20 +62,6 @@ npm run dev
 1. Clone this repository.
 
 2. Install dependencies with `npm install`.
-
-3. Create a `.env` file for environment variables:
-```bash
-PORT="7777"
-CLIENT_URL = 'http://localhost:3000/'
-API_DOMAIN="localhost"
-
-DATABASE_URL="postgresql://postgres:1111@localhost:5432/to-do-list?schema=public"
-
-JWT_SECRET="secret"
-
-EXPIRE_DAY_REFRESH_TOKEN="60"
-REFRESH_TOKEN_NAME = 'refreshToken'
-```
 
 ## 🛡️ Security Features
 
