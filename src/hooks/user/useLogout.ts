@@ -16,8 +16,11 @@ export default function useLogout() {
 	})
 
 	const handleLogout = () => {
-		push('/auth')
-		mutate()
+		mutate(undefined, {
+			onSuccess: () => {
+				push('/auth')
+			}
+		})
 	}
 
 	return { handleLogout }

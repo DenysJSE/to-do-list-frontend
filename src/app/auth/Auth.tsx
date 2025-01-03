@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { IAuth } from '@/types/auth.types'
 import { authService } from '@/services/auth.service'
 import { toast } from 'sonner'
@@ -18,11 +18,18 @@ export default function Auth() {
 
 	const { push } = useRouter()
 
+	const queryClient = useQueryClient()
+
 	const { mutate } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuth) =>
 			authService.auth(isLoginForm ? 'login' : 'register', data),
 		onSuccess() {
+			queryClient.invalidateQueries({ queryKey: ['get profile'] })
+			queryClient.invalidateQueries({ queryKey: ['tasks'] })
+			queryClient.invalidateQueries({ queryKey: ['categories'] })
+			queryClient.invalidateQueries({ queryKey: ['favorite categories'] })
+
 			toast.success('Successfully login!')
 			reset()
 			push(APP_PAGES.HOME)
