@@ -1,9 +1,9 @@
 import { EnumTaskPriority } from '@/types/task.types'
 
 export const priorityClasses: Record<EnumTaskPriority, string> = {
-	[EnumTaskPriority.LOW]: 'bg-low',
-	[EnumTaskPriority.MEDIUM]: 'bg-medium',
-	[EnumTaskPriority.HIGH]: 'bg-high'
+	[EnumTaskPriority.LOW]: 'var(--low)',
+	[EnumTaskPriority.MEDIUM]: 'var(--medium)',
+	[EnumTaskPriority.HIGH]: 'var(--high)'
 }
 
 export const priorityClassesFlag: Record<EnumTaskPriority, string> = {

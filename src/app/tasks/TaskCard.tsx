@@ -47,7 +47,10 @@ export default function TaskCard({
 						{task.title}
 					</h1>
 					<p
-						className={`ml-auto mr-5 ${priorityClasses[task.priority as EnumTaskPriority]} text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center z-10 ${task.isDone ? 'opacity-50' : ''}`}
+						className={`ml-auto mr-5 text-sm font-medium w-fit p-1 px-8 rounded-xl min-w-32 text-center z-10 ${task.isDone ? 'opacity-50' : ''}`}
+						style={{
+							background: priorityClasses[task.priority as EnumTaskPriority]
+						}}
 					>
 						{task.priority}
 					</p>
