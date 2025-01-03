@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 To-Do List App
 
-## Getting Started
+A sleek, feature-rich to-do list app designed to help you organize your tasks and boost productivity. Built with modern technologies, this app ensures a seamless user experience while demonstrating a robust and scalable architecture.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- **Task Management:** Add, edit, delete, and prioritize tasks effortlessly.
+- **Categories:** Organize tasks with custom categories.
+- **Cross-Device Sync:** Access your tasks from anywhere.
+- **Subtasks:** Create some subtasks for every task.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** [Next.js](https://nextjs.org/), [TailwindCSS](https://tailwindcss.com/) for styling
+- **Backend:** [Nest.js](https://nestjs.com/)
+- **Database:** [PostgreSQL](https://www.postgresql.org/), [Prisma](https://www.prisma.io/)
+- **Authentication:** JSON Web Tokens (JWT)
+
+[//]: # (- **Deployment:** [Vercel]&#40;https://vercel.com/&#41; &#40;Frontend&#41;, [Heroku]&#40;https://www.heroku.com/&#41; &#40;Backend&#41;)
+
+---
+
+## 📚 What I Learned
+
+- **Frontend:**
+    - Mastered Next.js and created custom hooks.
+    - Implemented responsive design with TailwindCSS.
+    - Mastered TanStack Query and improved knowledge how to use it.
+
+- **Backend:**
+    - Built RESTful APIs with Nest.js.
+    - Integrated secure user authentication with JWT.
+
+- **General Development:**
+    - Improved project structure for scalability and maintainability.
+    - Deployed full-stack applications seamlessly with Vercel and Heroku.
+
+---
+
+## 📸 Demo
+
+Check out the live demo [here](link-to-demo).  
+Or clone the repo and run locally:
 
 ```bash
+# Clone the repo (Backend)
+git clone https://github.com/DenysJSE/to-do-list-backend
+
+# Install dependencies
+npm install
+
+# Start the app
+npm run start: dev
+
+# Clone the repo (Frontend)
+git clone https://github.com/DenysJSE/to-do-list-frontend
+
+# Install dependencies
+npm install
+
+# Start the app
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚡ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone this repository.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies with `npm install`.
 
-## Learn More
+3. Create a `.env` file for environment variables:
+```bash
+PORT="7777"
+CLIENT_URL = 'http://localhost:3000/'
+API_DOMAIN="localhost"
 
-To learn more about Next.js, take a look at the following resources:
+DATABASE_URL="postgresql://postgres:1111@localhost:5432/to-do-list?schema=public"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+JWT_SECRET="secret"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+EXPIRE_DAY_REFRESH_TOKEN="60"
+REFRESH_TOKEN_NAME = 'refreshToken'
+```
 
-## Deploy on Vercel
+## 🛡️ Security Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- End-to-end encryption for sensitive user data.
+- Secure authentication using hashed passwords and JWTs.
+- Regularly sanitized inputs to prevent SQL injection and XSS attacks.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📌 Future Enhancements
+
+- Add labels for create more filters for tasks.
+- Implement searching tasks.
+- Support integrations with popular calendar apps.
+
+---
+
+## 🖋️ Contributing
+
+Contributions are welcome! Open an issue or submit a pull request.  
+Please follow the contribution guidelines.
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
