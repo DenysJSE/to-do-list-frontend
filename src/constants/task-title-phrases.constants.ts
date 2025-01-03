@@ -1,0 +1,23 @@
+export const exampleTasks = [
+	'Go to the library on Monday',
+	'Clean the house at 5 AM',
+	'Buy groceries for the week',
+	'Call mom to catch up',
+	'Finish reading a book',
+	'Plan the weekend trip',
+	'Take the dog for a walk',
+	'Attend a work meeting at 2 PM',
+	'Finish the report for the boss',
+	'Pick up dry cleaning',
+	'Schedule a dentist appointment',
+	'Visit a friend for lunch',
+	'Go to the gym for a workout',
+	'Water the plants',
+	'Organize the closet',
+	'Write a blog post',
+	'Call the electrician to fix the lights',
+	'Pick up a prescription from the pharmacy',
+	'Complete the online course module',
+	'Send an email to the project team',
+	'Prepare dinner for the family'
+]

@@ -23,15 +23,11 @@ export function useCreateTask() {
 			setCategoryId(1)
 			setPriority(null)
 
-			queryClient
-				.invalidateQueries({
-					queryKey: ['tasks']
-				})
-				.then(() => toast.success('Successfully created!'))
+			toast.success('Task successfully created!')
 
-			queryClient
-				.invalidateQueries({ queryKey: ['category tasks'] })
-				.then(() => toast.success('Successfully created!'))
+			queryClient.invalidateQueries({ queryKey: ['tasks'] })
+
+			queryClient.invalidateQueries({ queryKey: ['category tasks'] })
 
 			queryClient.invalidateQueries({ queryKey: ['categories'] })
 

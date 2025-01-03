@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { authService } from '@/services/auth.service'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 export default function useLogout() {
 	const { push } = useRouter()
@@ -11,6 +12,8 @@ export default function useLogout() {
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
 		onSuccess() {
+			toast.success('You are logout successfully')
+
 			queryClient.invalidateQueries({ queryKey: ['get profile'] })
 		}
 	})

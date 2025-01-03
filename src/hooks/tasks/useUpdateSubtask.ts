@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { ISubtaskFormState } from '@/types/task.types'
 import { taskService } from '@/services/task.service'
+import { toast } from 'sonner'
 
 export default function useUpdateSubtask() {
 	const { id } = useParams()
@@ -18,6 +19,8 @@ export default function useUpdateSubtask() {
 		mutationFn: ({ id, data }: { id: number; data: ISubtaskFormState }) =>
 			taskService.updateSubtask(id, data),
 		onSuccess() {
+			toast.success('Subtask updated successfully')
+
 			queryClient.invalidateQueries({ queryKey: ['task'] })
 
 			queryClient.invalidateQueries({ queryKey: ['subtasks'] })

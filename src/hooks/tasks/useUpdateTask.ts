@@ -23,6 +23,8 @@ export default function useUpdateTask() {
 		mutationFn: ({ id, data }: { id: number; data: ITaskFormState }) =>
 			taskService.updateTask(id, data),
 		onSuccess() {
+			toast.success('Task updated successfully')
+
 			queryClient.invalidateQueries({ queryKey: ['task'] })
 
 			queryClient.invalidateQueries({ queryKey: ['tasks'] })

@@ -3,6 +3,7 @@ import { categoryService } from '@/services/category.service'
 import { EnumCategoryColor, ICategoryFormState } from '@/types/category.types'
 import React, { useState } from 'react'
 import { useParams } from 'next/navigation'
+import { toast } from 'sonner'
 
 export default function useUpdateCategory() {
 	const { id } = useParams()
@@ -20,6 +21,8 @@ export default function useUpdateCategory() {
 		mutationFn: ({ id, data }: { id: number; data: ICategoryFormState }) =>
 			categoryService.update(id, data),
 		onSuccess() {
+			toast.success('Category updated successfully')
+
 			queryClient.invalidateQueries({ queryKey: ['category'] })
 
 			queryClient.invalidateQueries({ queryKey: ['categories'] })

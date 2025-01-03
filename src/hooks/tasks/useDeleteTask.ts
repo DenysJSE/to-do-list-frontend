@@ -9,18 +9,11 @@ export function useDeleteTask() {
 		mutationKey: ['delete task'],
 		mutationFn: (id: string) => taskService.deleteTask(id),
 		onSuccess() {
-			queryClient
-				.invalidateQueries({
-					queryKey: ['tasks']
-				})
-				.then(() => toast.success('Task deleted successfully!'))
+			toast.success('Task deleted successfully!')
 
-			queryClient
-				.invalidateQueries({ queryKey: ['category tasks'] })
-				.then(() => toast.success('Task deleted successfully!'))
-
+			queryClient.invalidateQueries({ queryKey: ['tasks'] })
+			queryClient.invalidateQueries({ queryKey: ['category tasks'] })
 			queryClient.invalidateQueries({ queryKey: ['categories'] })
-
 			queryClient.invalidateQueries({ queryKey: ['favorite category'] })
 		}
 	})

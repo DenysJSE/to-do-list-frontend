@@ -4,17 +4,12 @@ import { Flag } from 'lucide-react'
 import { useOutside } from '@/hooks/useOutside'
 import { EnumTaskPriority } from '@/types/task.types'
 import React from 'react'
+import { priorityClasses } from '@/constants/priority.constants'
 
 interface ICustomSelect {
 	priority: EnumTaskPriority | null
 	setPriorityAction: (priority: EnumTaskPriority) => void
 	priorityValues: EnumTaskPriority[]
-}
-
-const priorityClasses: Record<EnumTaskPriority, string> = {
-	[EnumTaskPriority.LOW]: '#A3C9E2',
-	[EnumTaskPriority.MEDIUM]: '#A9D8B7',
-	[EnumTaskPriority.HIGH]: '#D1A6F2'
 }
 
 export default function CustomPrioritySelect({

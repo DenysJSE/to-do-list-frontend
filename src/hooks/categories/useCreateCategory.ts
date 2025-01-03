@@ -39,17 +39,15 @@ export function useCreateCategory() {
 		mutationKey: ['category'],
 		mutationFn: (data: ICategoryFormState) =>
 			categoryService.createCategory(data),
-		onSuccess(newCategory) {
+		onSuccess() {
 			toast.success('Successfully created!')
 
 			setTitle('')
 			setColor(colorValues[0])
 
-			queryClient
-				.invalidateQueries({
-					queryKey: ['categories']
-				})
-				.then(() => console.log('Categories updated!'))
+			queryClient.invalidateQueries({
+				queryKey: ['categories']
+			})
 		},
 		onError() {
 			toast.error('Something went wrong!')

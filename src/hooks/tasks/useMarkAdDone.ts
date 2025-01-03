@@ -11,9 +11,7 @@ export default function useMarkAsDone() {
 		onSuccess() {
 			toast.success('Task is completed!')
 
-			queryClient.invalidateQueries({
-				queryKey: ['tasks']
-			})
+			queryClient.invalidateQueries({ queryKey: ['tasks'] })
 
 			queryClient.invalidateQueries({ queryKey: ['category tasks'] })
 

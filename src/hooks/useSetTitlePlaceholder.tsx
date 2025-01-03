@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react'
+import { exampleTasks } from '@/constants/task-title-phrases.constants'
 
 export default function useSetTitlePlaceholder() {
-	const exampleTasks = [
-		'Go to the library on Monday',
-		'Clean the house at 5 AM',
-		'Buy groceries for the week',
-		'Call mom to catch up',
-		'Finish reading a book',
-		'Plan the weekend trip'
-	]
-
 	const [placeholder, setPlaceholder] = useState('')
 
 	const getRandomTask = () => {

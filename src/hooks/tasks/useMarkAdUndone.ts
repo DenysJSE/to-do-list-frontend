@@ -11,9 +11,7 @@ export default function useMarkAsUndone() {
 		onSuccess() {
 			toast.success('Task is uncompleted!')
 
-			queryClient.invalidateQueries({
-				queryKey: ['tasks']
-			})
+			queryClient.invalidateQueries({ queryKey: ['tasks'] })
 
 			queryClient.invalidateQueries({ queryKey: ['category tasks'] })
 

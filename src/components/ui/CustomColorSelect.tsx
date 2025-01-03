@@ -2,7 +2,7 @@ import React from 'react'
 import { useOutside } from '@/hooks/useOutside'
 import { EnumCategoryColor } from '@/types/category.types'
 import { PaintRoller } from 'lucide-react'
-import { EnumCategoryColors } from '@/components/layouts/SidebarCategorySection'
+import { EnumCategoryColors } from '@/constants/category-colors.constants'
 
 export default function CustomColorSelect({
 	color,
