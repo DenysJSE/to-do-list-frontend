@@ -1,6 +1,6 @@
 'use client'
 
-import { CirclePlus, Inbox, LayoutGrid, Search } from 'lucide-react'
+import { CirclePlus, Inbox, LogOut, UserRound } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useCategories } from '@/hooks/categories/useCategories'
 import { useCategoriesFavorite } from '@/hooks/categories/useCategoriesFavorite'
@@ -11,6 +11,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useOutside } from '@/hooks/useOutside'
 import AddCategoryTask from '@/components/forms/AddCategoryTask'
+import useGetProfile from '@/hooks/user/useGetProfile'
+import useLogout from '@/hooks/user/useLogout'
 
 export default function Sidebar() {
 	const currentPath = usePathname()
@@ -24,7 +26,16 @@ export default function Sidebar() {
 
 	const { tasks } = useTasks()
 
+	const { user } = useGetProfile()
+	const { handleLogout } = useLogout()
+
 	const { ref, isShow, setIsShow } = useOutside(false)
+
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+	useEffect(() => {
+		if (user) setIsLoggedIn(true)
+	}, [user])
 
 	useEffect(() => {
 		if (favoriteCategories.length > 0) {
@@ -39,12 +50,27 @@ export default function Sidebar() {
 	return (
 		<>
 			<aside
-				className='w-[300px] bg-sidebar-background fixed top-0 bottom-0 left-0 py-6 px-4 flex flex-col z-50'
+				className='w-[300px] bg-sidebar-background fixed top-0 bottom-0 left-0 py-6 px-4 flex flex-col gap-2 z-50'
 				onMouseEnter={() => setIsHoverSidebar(true)}
 				onMouseLeave={() => setIsHoverSidebar(false)}
 			>
+				{isLoggedIn && (
+					<>
+						<div className='flex items-center gap-2 py-2 px-3 rounded-xl'>
+							<UserRound width={22} height={22} />
+							<h1 className='font-medium text-lg'>{user?.name}</h1>
+							<LogOut
+								width={18}
+								height={18}
+								className='ml-auto rotate-180 cursor-pointer'
+								onClick={() => handleLogout()}
+							/>
+						</div>
+						<hr className='text-border' />
+					</>
+				)}
 				<div
-					className='flex items-center gap-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'
+					className='flex items-center gap-2 py-2 px-3 mt-2 rounded-xl cursor-pointer hover:bg-hover'
 					onClick={() => {
 						setIsShow(true)
 						setIsTaskForm(true)
@@ -52,10 +78,6 @@ export default function Sidebar() {
 				>
 					<CirclePlus width={24} height={24} color={'#DC4C3E'} />
 					<h1 className='font-bold text-button-background'>Add task</h1>
-				</div>
-				<div className='flex items-center gap-2 mt-4 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'>
-					<Search width={20} height={20} />
-					<h1>Search</h1>
 				</div>
 				<Link
 					href={'/tasks'}
@@ -71,10 +93,6 @@ export default function Sidebar() {
 						)}
 					</div>
 				</Link>
-				<div className='flex items-center gap-2 py-2 px-3 rounded-xl cursor-pointer hover:bg-hover'>
-					<LayoutGrid width={20} height={20} />
-					<h1>Filters</h1>
-				</div>
 
 				{isFavorite && (
 					<SidebarCategoriesSection
